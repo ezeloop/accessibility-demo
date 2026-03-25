@@ -39,6 +39,48 @@ body {
 }
 .skip-link:focus { top: 0; }
 
+/* ── Final takeaway ── */
+.takeaway {
+  text-align: center;
+  padding: 4rem 2rem 3.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.takeaway-eyebrow {
+  font-size: .72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: #a0aec0;
+  margin-bottom: 1.25rem;
+}
+
+.takeaway-headline {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 800;
+  line-height: 1.45;
+  color: #1a202c;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.takeaway-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  background: #f7f8fc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: .55rem 1.2rem;
+  font-size: .88rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+@media (max-width: 500px) {
+  .takeaway-br { display: none; }
+}
+
 /* ── App footer ── */
 .app-footer {
   text-align: center;
@@ -268,6 +310,25 @@ body {
   .scenario-columns { grid-template-columns: 1fr; }
 }
 
+/* ── Shake animation (bad-side interactions) ── */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-5px); }
+  40%       { transform: translateX(5px);  }
+  60%       { transform: translateX(-3px); }
+  80%       { transform: translateX(3px);  }
+}
+
+/* Applied via JS; removed after animationend */
+.demo-box.is-shaking {
+  animation: shake 0.38s ease-in-out;
+}
+
+/* Honour user's motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .demo-box.is-shaking { animation: none; }
+}
+
 /* ── Column ── */
 .col-bad,
 .col-good {
@@ -311,8 +372,17 @@ body {
   padding: 1.25rem;
   min-height: 80px;
 }
-.col-bad  .demo-box { border-color: var(--clr-bad-border); }
+.col-bad  .demo-box {
+  border-color: #fc8181;
+  box-shadow: 0 0 0 3px rgba(252,129,129,.14), inset 0 1px 3px rgba(197,48,48,.06);
+}
 .col-good .demo-box { border-color: var(--clr-good-border); }
+
+/* Warning label variant for the bad column */
+.col-label-bad {
+  background: rgba(252,129,129,.18);
+  color: var(--clr-bad-label);
+}
 
 /* ── Code hint ── */
 .code-hint {
@@ -532,6 +602,30 @@ body {
   border-radius: 4px;
   padding: .1rem .35rem;
   white-space: nowrap;
+}
+
+/* ── Informational banner ── */
+.info-banner {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  background: #ebf8ff;
+  border: 1px solid #bee3f8;
+  border-left: 4px solid #4299e1;
+  border-radius: var(--radius);
+  padding: .75rem 1.1rem;
+  margin-bottom: 1rem;
+  font-size: .84rem;
+  color: #2c5282;
+  line-height: 1.6;
+}
+
+.info-banner-icon {
+  font-size: .95rem;
+  flex-shrink: 0;
+  color: #4299e1;
+  font-style: normal;
+  line-height: 1.6;
 }
 
 /* ── "Try this" keyboard tip ── */

@@ -1,23 +1,33 @@
+import { useRef, useCallback } from 'react'
 import ScorePanel from './ScorePanel.jsx'
 
 export default function ScenarioCard({ number, title, description, scores, BadComponent, GoodComponent }) {
-  const id         = `scenario-${number}`
+  const id          = `scenario-${number}`
+  const descId      = `scenario-${number}-desc`
   const improvement = scores ? scores.good - scores.bad : null
+  const badColRef   = useRef(null)
+
+  const triggerShake = useCallback(() => {
+    const box = badColRef.current?.querySelector('.demo-box')
+    if (!box || box.classList.contains('is-shaking')) return
+    box.classList.add('is-shaking')
+    box.addEventListener('animationend', () => box.classList.remove('is-shaking'), { once: true })
+  }, [])
 
   return (
-    <section className="scenario-block" aria-labelledby={id}>
+    <section className="scenario-block" role="region" aria-labelledby={id}>
       <div className="scenario-header">
-        <h2 id={id}>
+        <h2 id={id} aria-describedby={description ? descId : undefined} tabIndex={0}>
           <span aria-hidden="true">Scenario {number} — </span>
           {title}
         </h2>
-        {description && <p>{description}</p>}
+        {description && <p id={descId}>{description}</p>}
       </div>
 
       <div className="scenario-columns">
-        <div className="col-bad">
-          <span className="col-label" aria-label="Non-accessible version">
-            <span aria-hidden="true">✗</span> Non-Accessible
+        <div className="col-bad" ref={badColRef} onClickCapture={triggerShake}>
+          <span className="col-label col-label-bad" aria-label="Non-accessible version">
+            <span aria-hidden="true">⚠</span> Non-Accessible
           </span>
           <BadComponent />
         </div>
@@ -32,17 +42,8 @@ export default function ScenarioCard({ number, title, description, scores, BadCo
 
       {scores && (
         <div className="score-row" aria-label={`Accessibility metrics for scenario ${number}`}>
-          <ScorePanel
-            score={scores.bad}
-            criteria={scores.criteria}
-            side="bad"
-          />
-          <ScorePanel
-            score={scores.good}
-            criteria={scores.criteria}
-            side="good"
-            improvement={improvement}
-          />
+          <ScorePanel score={scores.bad}  criteria={scores.criteria} side="bad" />
+          <ScorePanel score={scores.good} criteria={scores.criteria} side="good" improvement={improvement} />
         </div>
       )}
     </section>

@@ -150,6 +150,12 @@ export default function App() {
       </header>
 
       <main id="main-content" className="app-main">
+        <p className="info-banner" role="note">
+          <span className="info-banner-icon" aria-hidden="true">ℹ</span>
+          This demo intentionally includes non-accessible implementations to demonstrate
+          real-world accessibility issues. Lighthouse warnings are expected in those sections.
+        </p>
+
         <aside className="try-this-banner" aria-label="Keyboard navigation tip">
           <span className="try-this-icon" aria-hidden="true">⌨</span>
           <div className="try-this-body">
@@ -172,6 +178,17 @@ export default function App() {
           <ScenarioCard key={s.number} {...s} />
         ))}
       </main>
+
+      <section className="takeaway" aria-labelledby="takeaway-title">
+        <p className="takeaway-eyebrow" aria-hidden="true">Final takeaway</p>
+        <h2 id="takeaway-title" className="takeaway-headline" tabIndex={0}>
+          Accessibility is not a feature.<br />
+          It determines whether your product<br className="takeaway-br" /> can be used at all.
+        </h2>
+        <p className="takeaway-cta">
+          <kbd className="kbd-key">Tab</kbd> Try navigating again using only your keyboard.
+        </p>
+      </section>
 
       <footer className="app-footer">
         Criteria mapped to WCAG 2.1 · Scores simulate Lighthouse 11 accessibility audits
