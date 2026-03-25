@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import ScenarioCard   from './components/ScenarioCard.jsx'
 import SummaryBanner  from './components/SummaryBanner.jsx'
 import { BadButton,   GoodButton   } from './components/scenarios/Scenario1Button.jsx'
@@ -93,6 +94,12 @@ const scenarios = [
 ]
 
 export default function App() {
+  const headingRef = useRef(null)
+
+  useEffect(() => {
+    headingRef.current?.focus()
+  }, [])
+
   return (
     <>
       <a href="#main-content" className="skip-link">Skip to main content</a>
@@ -105,7 +112,7 @@ export default function App() {
             WCAG 2.1 · Accessibility in Practice
           </p>
 
-          <h1 className="header-headline">
+          <h1 className="header-headline" tabIndex={-1} ref={headingRef}>
             <span className="line-1">Two identical interfaces.</span>
             <span className="line-2">
               <span className="headline-works">One works.</span>{' '}
