@@ -25,7 +25,7 @@ export default function ScenarioCard({ number, title, description, scores, BadCo
       </div>
 
       <div className="scenario-columns">
-        <div className="col-bad" ref={badColRef} onClickCapture={triggerShake}>
+        <div className="col-bad" ref={badColRef} onClickCapture={triggerShake} inert>
           <span className="col-label col-label-bad" aria-label="Non-accessible version">
             <span aria-hidden="true">⚠</span> Non-Accessible
           </span>
